@@ -8,6 +8,8 @@ dotenv.config();
 
 
 app.use(express.json());
+app.use(express.static('public'))
+
 Database.connect();
 app.use("/", webRoute);
 

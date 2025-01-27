@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+
 
 const userSchema = new mongoose.Schema({
     name:{
@@ -15,7 +17,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     gender:{
-        type: Enum,
+        type: String,
         required: true,
         enum: ["male", "female"]
     },
@@ -23,7 +25,7 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     role:{
-        type: Enum,
+        type: String,
         enum: ["user", "admin"],
         default: "user"
     },
@@ -36,7 +38,17 @@ const userSchema = new mongoose.Schema({
         default: Date.now
     }
 
+},{
+    versionKey: false
 });
+
+
+userSchema.pre("save", async function(next){
+    const hash = await bcrypt.hash(this.password, 10);
+    this.password = hash;
+    next();
+});
+
 
 
 export default mongoose.model("User", userSchema);
