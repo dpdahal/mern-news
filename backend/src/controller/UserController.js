@@ -1,7 +1,6 @@
 import Users from "../models/Users.js";
 import dotenv from "dotenv";
 
-
 dotenv.config();
 
 class UserController {
@@ -9,15 +8,6 @@ class UserController {
     async index(req, res) {
         try {
             let usersData = await Users.find({});
-            usersData.map((user) => {
-                if(user.image){
-                    user.image = `${process.env.PUBLIC_URL}/users/${user.image}`;
-                }else{
-                    user.image = `${process.env.PUBLIC_URL}/icons/notfound.png`;
-                }
-                user.password = undefined;
-
-            });
             return res.json({ users: usersData }).status(200);
         } catch (err) {
             return res.status(400).json({ message: err.message });
