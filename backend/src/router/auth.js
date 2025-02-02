@@ -5,5 +5,6 @@ const authRoute = express.Router();
 const aInstance = new AuthController();
 
 authRoute.post("/", aInstance.login);
+authRoute.post("/token-verify", aInstance.checkTokenVerify);
 
 export default authRoute;

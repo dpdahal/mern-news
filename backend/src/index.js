@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import webRoute from "./router/web.js";
 import Database from "./connection/Database.js";
 import DatabaseSeeder from "./seeder/DatabaseSeeder.js";
@@ -7,6 +8,7 @@ import DatabaseSeeder from "./seeder/DatabaseSeeder.js";
 const app = express();
 dotenv.config();
 
+app.use(cors());
 
 app.use(express.json());
 app.use(express.static('public'))
