@@ -33,6 +33,12 @@ function AdminMiddleware() {
     }, []);
 
 
+    const logout =()=>{
+        localStorage.clear();
+        window.location.href = "/login";
+    }
+
+
     if (isLogin) {
         return (<div><h1>is loading.....</h1></div>)
     } else {
@@ -118,10 +124,12 @@ function AdminMiddleware() {
                                                 <hr className="dropdown-divider" />
                                             </li>
                                             <li>
-                                                <a className="dropdown-item d-flex align-items-center" href="#">
+                                                <button 
+                                                onClick={logout}
+                                                className="dropdown-item d-flex align-items-center">
                                                     <i className="bi bi-box-arrow-right" />
                                                     <span>Sign Out</span>
-                                                </a>
+                                                </button>
                                             </li>
                                         </ul>
 

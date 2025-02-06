@@ -38,7 +38,7 @@ class UserController {
                     image = req.file.filename;
                 }
                 await Users.create({ ...req.body,image:image });
-                return res.json({ message: 'User created' });
+                return res.json({ message: 'User created',success:true });
             }
         } catch (err) {
             return res.status(400).json({ message: err.message });

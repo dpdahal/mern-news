@@ -28,9 +28,10 @@ class CategoryController {
     async store(req, res) {
         try {
             let total = await Category.find({ slug: req.body.slug }).countDocuments();
+            console.log(total);
             if (total > 0) {
                 return res.status(400).json({ slug: 'Slug already exists' });
-            } else {ø
+            } else {
                 await Category.create({ ...req.body});
                 return res.json({ message: 'Category created' });
             }
