@@ -1,16 +1,38 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
+import axios from 'axios'
 
 function HomeNewsComponent() {
+    const [news, setNews] = useState([]);
+
+    const getNews=()=>{
+        axios.get("http://localhost:8000/news")
+        .then((response)=>{
+            setNews(response.data.news);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+    }
+
+    useEffect(() => {
+        getNews();
+    },[]);
+    console.log(news);
     return (
         <div className='row'>
-            <div className="col-md-4">
+            {news && news.map((nn, index) => {
+                return (
+
+                    <div className="col-md-4" key={index}>
                 <div className="card">
-                    <img src="..." className="card-img-top" alt="..." />
+                    <img src={nn.image} className="card-img-top" style={{height:"200px"}} alt="..." />
                     <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
+                        <h5 className="card-title">{nn.title}</h5>
+                        <p>Category: {nn.categoryId.name}
+                            Posted by: {nn.userId.name}
+                        </p>
                         <p className="card-text">
-                            Some quick example text to build on the card title and make up the bulk of
-                            the card's content.
+                            {nn.description}
                         </p>
                         <a href="#" className="btn btn-primary">
                             Go somewhere
@@ -18,40 +40,10 @@ function HomeNewsComponent() {
                     </div>
                 </div>
             </div>
-            <div className="col-md-4">
-                <div className="card">
-                    <img src="..." className="card-img-top" alt="..." />
-                    <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">
-                            Some quick example text to build on the card title and make up the bulk of
-                            the card's content.
-                        </p>
-                        <a href="#" className="btn btn-primary">
-                            Go somewhere
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-md-4">
-                <div className="card">
-                    <img src="..." className="card-img-top" alt="..." />
-                    <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">
-                            Some quick example text to build on the card title and make up the bulk of
-                            the card's content.
-                        </p>
-                        <a href="#" className="btn btn-primary">
-                            Go somewhere
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-
-
+                )
+            
+            })}
+          
         </div>
     )
 }
